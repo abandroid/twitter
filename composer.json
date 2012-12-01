@@ -1,0 +1,23 @@
+{
+    "name": "endroid/twitter",
+    "description": "Endroid Twitter",
+    "keywords": ["endroid", "twitter"],
+    "homepage": "https://github.com/endroid/Twitter",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeroen van den Enden",
+            "email": "info@endroid.nl",
+            "homepage": "http://endroid.nl/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "kriswallsmith/buzz": "0.7"
+    },
+    "autoload": {
+        "psr-0": { "Endroid": "src/" }
+    },
+    "minimum-stability": "dev"
+}

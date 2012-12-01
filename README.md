@@ -10,7 +10,7 @@ building requests. The only things you need are the keys which you can find in t
 <?php
 
 $twitter = new Endroid\Twitter\Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
-$tweets = $twitter->getTimeline();
+$timeline = $twitter->getTimeline();
 
 ```
 

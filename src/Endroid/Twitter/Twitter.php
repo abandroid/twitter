@@ -55,54 +55,92 @@ class Twitter
         $this->browser = new Browser(new Curl());
     }
 
-    public function request($url)
+    /**
+     * Performs a query to the Twitter API.
+     *
+     * @param $name
+     * @param $method
+     * @param array $parameters
+     * @return mixed
+     */
+    public function query($name, $method, $parameters = array())
     {
-        // parameters
-        $params = array(
+        $oauthParameters = array(
             'oauth_consumer_key' => $this->consumerKey,
             'oauth_nonce' => time(),
             'oauth_signature_method' => 'HMAC-SHA1',
-            'oauth_token' => $this->accessToken,
             'oauth_timestamp' => time(),
+            'oauth_token' => $this->accessToken,
             'oauth_version' => '1.0'
         );
 
-        // generate and add signature parameter
-        $queryParams = array();
-        ksort($params);
-        foreach ($params as $key => $value){
-            $queryParams[] = $key.'='.rawurlencode($value);
+        // Part 1 : http method
+        $httpMethod = $method;
+
+        // Part 2 : base url
+        $baseUrl = $this->apiUrl.$name.'.json';
+
+        // Part 3 : parameter string
+        $oauthParameters = array_merge($parameters, $oauthParameters);
+        ksort($oauthParameters);
+        $parameterQueryParts = array();
+        foreach ($oauthParameters as $key => $value) {
+            $parameterQueryParts[] = $key.'='.rawurlencode($value);
         }
-        $queryString = "GET&" . rawurlencode($url) . '&' . rawurlencode(implode('&', $queryParams));
-        $compositeSecret = rawurlencode($this->consumerSecret) . '&' . rawurlencode($this->accessTokenSecret);
-        $params['oauth_signature'] = base64_encode(hash_hmac('sha1', $queryString, $compositeSecret, true));
+        $parameterString = implode('&', $parameterQueryParts);
 
-        $header = 'Authorization: OAuth ';
-        $values = array();
-        foreach ($params as $key => $value) {
-            $values[] = $key.'="'.rawurlencode($value).'"';
+        // Build signature string from part 1, 2 and 3
+        $signatureString = strtoupper($httpMethod).'&'.rawurlencode($baseUrl).'&'.rawurlencode($parameterString);
+        $signatureKey = rawurlencode($this->consumerSecret).'&'.rawurlencode($this->accessTokenSecret);
+        $signature = base64_encode(hash_hmac('sha1', $signatureString, $signatureKey, true));
+
+        // Create oauth header
+        $parameterQueryParts[] = 'oauth_signature='.rawurlencode($signature);
+        $oauthHeader = 'OAuth '.implode(', ', $parameterQueryParts);
+
+        // The call has to be made against the base url + query string
+        if (count($parameters) > 0) {
+            $requestQueryParts = array();
+            foreach ($parameters as $key => $value) {
+                $requestQueryParts[] = $key.'='.rawurlencode($value);
+            }
+            $baseUrl .= '?'.implode('&', $requestQueryParts);
         }
-        $header .= implode(', ', $values);
 
-        $options = array( CURLOPT_HTTPHEADER => array($header, 'Expect:'),
-            //CURLOPT_POSTFIELDS => $postfields,
-            CURLOPT_HEADER => false,
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => false);
+        // Perform curl request
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $baseUrl);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/x-www-form-urlencoded',
+            'Authorization: '.$oauthHeader
+        ));
+        if (strtolower($httpMethod) == 'post') {
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $parameters);
+        }
+        $response = json_decode(curl_exec($curl));
+        curl_close($curl);
 
-        $feed = curl_init();
-        curl_setopt_array($feed, $options);
-        $json = curl_exec($feed);
-        curl_close($feed);
-
-        return json_decode($json);
+        return $response;
     }
 
-    public function getTimeline()
+    /**
+     * Retrieves the current user's timeline.
+     *
+     * @param array $parameters
+     * @return mixed
+     */
+    public function getTimeline($parameters = array())
     {
-        $url = $this->apiUrl.'/statuses/user_timeline.json';
-        $response = $this->request($url);
+        $defaults = array(
+            'count' => 200
+        );
+
+        $parameters = $parameters + $defaults;
+
+        $response = $this->query('/statuses/user_timeline', 'GET', $parameters);
 
         return $response;
     }

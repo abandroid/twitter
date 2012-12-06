@@ -10,7 +10,7 @@ class Twitter
     /**
      * @var string
      */
-    protected $apiUrl = 'https://api.twitter.com/1.1';
+    protected $apiUrl = 'https://api.twitter.com/1.1/';
 
     /**
      * @var string
@@ -59,11 +59,12 @@ class Twitter
      * Performs a query to the Twitter API.
      *
      * @param $name
-     * @param $method
+     * @param string $method
+     * @param string $format
      * @param array $parameters
-     * @return mixed
+     * @return \Buzz\Response
      */
-    public function query($name, $method, $parameters = array())
+    public function query($name, $method = 'GET', $format = 'json', $parameters = array())
     {
         $oauthParameters = array(
             'oauth_consumer_key' => $this->consumerKey,
@@ -78,7 +79,7 @@ class Twitter
         $httpMethod = $method;
 
         // Part 2 : base url
-        $baseUrl = $this->apiUrl.$name.'.json';
+        $baseUrl = $this->apiUrl.$name.'.'.$format;
 
         // Part 3 : parameter string
         $oauthParameters = array_merge($parameters, $oauthParameters);
@@ -94,9 +95,13 @@ class Twitter
         $signatureKey = rawurlencode($this->consumerSecret).'&'.rawurlencode($this->accessTokenSecret);
         $signature = base64_encode(hash_hmac('sha1', $signatureString, $signatureKey, true));
 
-        // Create oauth header
+        // Create headers containing oauth
         $parameterQueryParts[] = 'oauth_signature='.rawurlencode($signature);
         $oauthHeader = 'OAuth '.implode(', ', $parameterQueryParts);
+        $headers = array(
+            'Content-Type: application/x-www-form-urlencoded',
+            'Authorization: '.$oauthHeader
+        );
 
         // The call has to be made against the base url + query string
         if (count($parameters) > 0) {
@@ -108,40 +113,25 @@ class Twitter
         }
 
         // Perform curl request
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $baseUrl);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/x-www-form-urlencoded',
-            'Authorization: '.$oauthHeader
-        ));
-        if (strtolower($httpMethod) == 'post') {
-            curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $parameters);
+        if (strtoupper($method) == 'GET') {
+            $response = $this->browser->get($baseUrl, $headers);
+        } else {
+            $response = $this->browser->post($baseUrl, $headers);
         }
-        $response = json_decode(curl_exec($curl));
-        curl_close($curl);
 
         return $response;
     }
 
     /**
-     * Retrieves the current user's timeline.
+     * Returns the user timeline.
      *
-     * @param array $parameters
+     * @param $parameters
      * @return mixed
      */
-    public function getTimeline($parameters = array())
+    public function getTimeline($parameters)
     {
-        $defaults = array(
-            'count' => 200
-        );
+        $response = $this->query('statuses/user_timeline', 'GET', 'json', $parameters);
 
-        $parameters = $parameters + $defaults;
-
-        $response = $this->query('/statuses/user_timeline', 'GET', $parameters);
-
-        return $response;
+        return json_decode($response->getContent());
     }
 }

@@ -10,10 +10,19 @@ building requests. The only things you need are the keys which you can find in t
 <?php
 
 $twitter = new Endroid\Twitter\Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
-$timeline = $twitter->getTimeline();
+
+// Retrieve the user's timeline
+$tweets = $twitter->getTimeline(array(
+    'count' => 5
+));
+
+// Or retrieve the timeline using the generic query method
+$response = $this->query('statuses/user_timeline', 'GET', 'json', $parameters);
+$tweets = json_decode($response->getContent());
 
 ```
 
 ## Symfony
 
-You can use [`EndroidTwitterBundle`](https://github.com/endroid/EndroidTwitterBundle) to enable this service in your Symfony application.
+You can use [`EndroidTwitterBundle`](https://github.com/endroid/EndroidTwitterBundle) to enable this service in your Symfony
+application or to expose the Twitter API through your own domain.

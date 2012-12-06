@@ -17,7 +17,7 @@ $tweets = $twitter->getTimeline(array(
 ));
 
 // Or retrieve the timeline using the generic query method
-$response = $this->query('statuses/user_timeline', 'GET', 'json', $parameters);
+$response = $twitter->query('statuses/user_timeline', 'GET', 'json', $parameters);
 $tweets = json_decode($response->getContent());
 
 ```

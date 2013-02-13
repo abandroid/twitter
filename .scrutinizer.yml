@@ -4,4 +4,4 @@ tools:
         config:
             standard: PSR2
     php_mess_detector: true
-    php_analyzer: true
+    php_analyzer: false

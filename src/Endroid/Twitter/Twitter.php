@@ -112,7 +112,7 @@ class Twitter
             $baseUrl .= '?'.implode('&', $requestQueryParts);
         }
 
-        // Perform curl request
+        // Perform cURL request
         if (strtoupper($method) == 'GET') {
             $response = $this->browser->get($baseUrl, $headers);
         } else {

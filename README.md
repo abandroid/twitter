@@ -1,6 +1,8 @@
 Endroid Twitter
 ===============
 
+*By [endroid](http://endroid.nl/)*
+
 [![Build Status](https://secure.travis-ci.org/endroid/Twitter.png)](http://travis-ci.org/endroid/Twitter)
 
 Twitter helps making requests to the Twitter API, without having to bother too much about OAuth headers and
@@ -26,3 +28,8 @@ $tweets = json_decode($response->getContent());
 
 You can use [`EndroidTwitterBundle`](https://github.com/endroid/EndroidTwitterBundle) to enable this service in your Symfony
 application or to expose the Twitter API through your own domain.
+
+## License
+
+This bundle is under the MIT license. For the full copyright and license information, please view the LICENSE file that
+was distributed with this source code.

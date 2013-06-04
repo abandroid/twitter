@@ -69,7 +69,7 @@ class Twitter
      * @param string $method
      * @param string $format
      * @param array $parameters
-     * @return \Buzz\Response
+     * @return \Buzz\Message\Response
      */
     public function query($name, $method = 'GET', $format = 'json', $parameters = array())
     {

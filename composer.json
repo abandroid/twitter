@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "kriswallsmith/buzz": "0.7"
+        "kriswallsmith/buzz": "~0.3"
     },
     "autoload": {
         "psr-0": { "Endroid": "src/" }

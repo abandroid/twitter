@@ -66,9 +66,9 @@ class Twitter
      * Performs a query to the Twitter API.
      *
      * @param $name
-     * @param string $method
-     * @param string $format
-     * @param array $parameters
+     * @param  string                 $method
+     * @param  string                 $format
+     * @param  array                  $parameters
      * @return \Buzz\Message\Response
      */
     public function query($name, $method = 'GET', $format = 'json', $parameters = array())
@@ -79,7 +79,7 @@ class Twitter
             'oauth_signature_method' => 'HMAC-SHA1',
             'oauth_timestamp' => time(),
             'oauth_token' => $this->accessToken,
-            'oauth_version' => '1.0'
+            'oauth_version' => '1.0',
         );
 
         // Part 1 : http method
@@ -107,7 +107,7 @@ class Twitter
         $oauthHeader = 'OAuth '.implode(', ', $parameterQueryParts);
         $headers = array(
             'Content-Type: application/x-www-form-urlencoded',
-            'Authorization: '.$oauthHeader
+            'Authorization: '.$oauthHeader,
         );
 
         // The call has to be made against the base url + query string

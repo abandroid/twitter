@@ -40,7 +40,7 @@ class Twitter
     protected $accessTokenSecret;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
      * @param $consumerKey
      * @param $consumerSecret
@@ -66,9 +66,10 @@ class Twitter
      * Performs a query to the Twitter API.
      *
      * @param $name
-     * @param  string                 $method
-     * @param  string                 $format
-     * @param  array                  $parameters
+     * @param string $method
+     * @param string $format
+     * @param array  $parameters
+     *
      * @return \Buzz\Message\Response
      */
     public function query($name, $method = 'GET', $format = 'json', $parameters = array())
@@ -133,6 +134,7 @@ class Twitter
      * Returns the user timeline.
      *
      * @param $parameters
+     *
      * @return mixed
      */
     public function getTimeline($parameters)

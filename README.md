@@ -10,10 +10,22 @@ Endroid Twitter
 Twitter helps making requests to the Twitter API, without having to bother too much about OAuth headers and
 building requests. The only things you need are the keys which you can find in the [developer console](https://dev.twitter.com/).
 
+## Installation
+
+Use [Composer](https://getcomposer.org/) to install the library.
+
+``` bash
+$ composer require endroid/twitter
+```
+
+## Usage
+
 ```php
 <?php
 
-$twitter = new Endroid\Twitter\Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+use Endroid\Twitter\Twitter;
+
+$twitter = new Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
 
 // Retrieve the user's timeline
 $tweets = $twitter->getTimeline(array(
@@ -30,6 +42,10 @@ $tweets = json_decode($response->getContent());
 
 You can use [`EndroidTwitterBundle`](https://github.com/endroid/EndroidTwitterBundle) to enable this service in your Symfony
 application or to expose the Twitter API through your own domain.
+
+## Versioning
+
+Semantic versioning ([semver](http://semver.org/)) is applied.
 
 ## License
 

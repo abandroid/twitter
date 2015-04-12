@@ -17,7 +17,9 @@
         "kriswallsmith/buzz": "~0.3"
     },
     "autoload": {
-        "psr-0": { "Endroid": "src/" }
+        "psr-4": {
+            "Endroid\\": "src/Endroid/"
+        }
     },
     "extra": {
         "branch-alias": {

@@ -9,7 +9,9 @@
 
 namespace Endroid\Tests\Twitter;
 
-class TwitterTest extends \PHPUnit_Framework_TestCase
+use PHPUnit_Framework_TestCase;
+
+class TwitterTest extends PHPUnit_Framework_TestCase
 {
     public function testNoTestsYet()
     {

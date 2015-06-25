@@ -1,5 +1,5 @@
-Endroid Twitter
-===============
+Twitter
+=======
 
 *By [endroid](http://endroid.nl/)*
 
@@ -7,7 +7,7 @@ Endroid Twitter
 [![Latest Stable Version](https://poser.pugx.org/endroid/twitter/v/stable.png)](https://packagist.org/packages/endroid/twitter)
 [![Total Downloads](https://poser.pugx.org/endroid/twitter/downloads.png)](https://packagist.org/packages/endroid/twitter)
 
-Twitter helps making requests to the Twitter API, without having to bother too much about OAuth headers and
+This library helps making requests to the Twitter API, without having to bother too much about OAuth headers and
 building requests. The only things you need are the keys which you can find in the [developer console](https://dev.twitter.com/).
 
 ## Installation

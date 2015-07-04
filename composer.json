@@ -14,12 +14,12 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "kriswallsmith/buzz": "~0.14"
+        "kriswallsmith/buzz": "~0.0"
     },
     "require-dev": {
-        "fabpot/php-cs-fixer": "~1.9",
-        "phpunit/phpunit": "~4.7",
-        "symfony/var-dumper": "~2.7"
+        "fabpot/php-cs-fixer": "~1.0",
+        "phpunit/phpunit": "~4.0",
+        "symfony/var-dumper": "~2.3"
     },
     "autoload": {
         "psr-4": {

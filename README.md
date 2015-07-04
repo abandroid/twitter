@@ -45,7 +45,7 @@ application or to expose the Twitter API through your own domain.
 
 ## Versioning
 
-Semantic versioning ([semver](http://semver.org/)) is applied.
+Semantic versioning ([semver](http://semver.org/)) is applied as much as possible.
 
 ## License
 

@@ -18,6 +18,10 @@ Use [Composer](https://getcomposer.org/) to install the library.
 $ composer require endroid/twitter
 ```
 
+## Get consumer access key and token from Twitter
+
+Register your application at http://apps.twitter.com/app
+
 ## Usage
 
 ```php

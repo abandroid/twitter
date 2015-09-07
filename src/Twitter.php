@@ -40,13 +40,18 @@ class Twitter
     protected $accessTokenSecret;
 
     /**
+     * @var Browser
+     */
+    protected $browser;
+
+    /**
      * Class constructor.
      *
      * @param $consumerKey
      * @param $consumerSecret
      * @param $accessToken
      * @param $accessTokenSecret
-     * @param null $apiUrl
+     * @param string|null $apiUrl
      */
     public function __construct($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret, $apiUrl = null)
     {
@@ -56,7 +61,7 @@ class Twitter
         $this->accessTokenSecret = $accessTokenSecret;
 
         if ($apiUrl) {
-            $this->apiUrl = $apiUrl;
+            $this->apiUrl = (string) $apiUrl;
         }
 
         $this->browser = new Browser(new Curl());

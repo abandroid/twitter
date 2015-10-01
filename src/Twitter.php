@@ -52,8 +52,10 @@ class Twitter
      * @param $accessToken
      * @param $accessTokenSecret
      * @param string|null $apiUrl
+     * @param string|null $proxy
+     * @param $timeout
      */
-    public function __construct($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret, $apiUrl = null)
+    public function __construct($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret, $apiUrl = null, $proxy = null, $timeout = 5)
     {
         $this->consumerKey = $consumerKey;
         $this->consumerSecret = $consumerSecret;
@@ -64,7 +66,14 @@ class Twitter
             $this->apiUrl = (string) $apiUrl;
         }
 
-        $this->browser = new Browser(new Curl());
+        $curl = new Curl();
+
+        if ($proxy) {
+            $curl->setProxy($proxy);
+        }
+
+        $curl->setTimeout($timeout);
+        $this->browser = new Browser($curl);
     }
 
     /**

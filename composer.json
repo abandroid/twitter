@@ -18,7 +18,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Endroid\\Twitter\\": [ "src/", "tests/" ]
+            "Endroid\\Twitter\\": [ "src/" ],
+            "Endroid\\Twitter\\Tests\\": [ "tests/" ]
         }
     },
     "config": {

@@ -29,6 +29,7 @@ Register your application at http://apps.twitter.com/app
 
 use Endroid\Twitter\Twitter;
 
+// If you want to fetch the Twitter API with "application only" authentication, $accessToken and $accessTokenSecret are optional
 $twitter = new Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
 
 // Retrieve the user's timeline

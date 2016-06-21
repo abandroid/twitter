@@ -25,12 +25,12 @@ class Twitter
     /**
      * @var string
      */
-    const TOKEN_URL = self::BASE_URL.'/oauth2/token/';
+    const TOKEN_URL = '/oauth2/token/';
 
     /**
      * @var string
      */
-    protected $apiUrl = self::BASE_URL.'/1.1/';
+    protected $apiUrl;
 
     /**
      * @var string
@@ -77,11 +77,7 @@ class Twitter
         $this->consumerSecret = $consumerSecret;
         $this->accessToken = $accessToken;
         $this->accessTokenSecret = $accessTokenSecret;
-
-        if ($apiUrl) {
-            $this->apiUrl = $apiUrl;
-        }
-
+        $this->apiUrl = $apiUrl ?: self::BASE_URL.'/1.1/';
         $this->browser = new Browser(new Curl());
     }
 
@@ -209,7 +205,7 @@ class Twitter
             'Content-Type: application/x-www-form-urlencoded'
         );
 
-        $response = $this->call('POST', self::TOKEN_URL, $headers, 'grant_type=client_credentials');
+        $response = $this->call('POST', self::BASE_URL.self::TOKEN_URL, $headers, 'grant_type=client_credentials');
         $content = $response->getContent();
         $result = json_decode($content, true);
 

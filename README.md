@@ -3,9 +3,11 @@ Twitter
 
 *By [endroid](http://endroid.nl/)*
 
+[![Latest Stable Version](http://img.shields.io/packagist/v/endroid/twitter.svg)](https://packagist.org/packages/endroid/twitter)
 [![Build Status](https://secure.travis-ci.org/endroid/Twitter.png)](http://travis-ci.org/endroid/Twitter)
-[![Latest Stable Version](https://poser.pugx.org/endroid/twitter/v/stable.png)](https://packagist.org/packages/endroid/twitter)
-[![Total Downloads](https://poser.pugx.org/endroid/twitter/downloads.png)](https://packagist.org/packages/endroid/twitter)
+[![Total Downloads](http://img.shields.io/packagist/dt/endroid/twitter.svg)](https://packagist.org/packages/endroid/twitter)
+[![Monthly Downloads](http://img.shields.io/packagist/dm/endroid/twitter.svg)](https://packagist.org/packages/endroid/twitter)
+[![License](http://img.shields.io/packagist/l/endroid/twitter.svg)](https://packagist.org/packages/endroid/twitter)
 
 This library helps making requests to the Twitter API, without having to bother too much about OAuth headers and
 building requests. The only things you need are the keys which you can find in the [developer console](https://dev.twitter.com/).
@@ -50,9 +52,9 @@ application or to expose the Twitter API through your own domain.
 
 ## Versioning
 
-Version numbers follow the MAJOR.MINOR.PATCH scheme. Backwards compatible
-changes will be kept to a minimum but be aware that these can occur. Lock
-your dependencies for production and test your code when upgrading.
+Version numbers follow the MAJOR.MINOR.PATCH scheme. Backwards compatibility
+breaking changes will be kept to a minimum but be aware that these can occur.
+Lock your dependencies for production and test your code when upgrading.
 
 ## License
 

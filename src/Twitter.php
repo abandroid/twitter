@@ -160,7 +160,7 @@ class Twitter
         ) {
             $mandatoryParameters = array('accessToken', 'accessTokenSecret', 'consumerKey', 'consumerSecret');
             throw new InvalidParametersException(
-                sprintf("Twitter needs these mandatory parameters: %s", implode(', ', $mandatoryParameters))
+                sprintf('Twitter needs these mandatory parameters: %s', implode(', ', $mandatoryParameters))
             );
         }
 
@@ -202,7 +202,7 @@ class Twitter
     {
         $headers = array(
             'Authorization: '.$this->getBasicHeader(),
-            'Content-Type: application/x-www-form-urlencoded'
+            'Content-Type: application/x-www-form-urlencoded',
         );
 
         $response = $this->call('POST', self::BASE_URL.self::TOKEN_URL, $headers, 'grant_type=client_credentials');
@@ -222,7 +222,7 @@ class Twitter
     }
 
     /**
-     * Returns the header authorization Basic value
+     * Returns the header authorization Basic value.
      *
      * @return string
      *
@@ -241,7 +241,7 @@ class Twitter
     }
 
     /**
-     * Returns the query parameters
+     * Returns the query parameters.
      *
      * @param array $parameters
      *
@@ -262,11 +262,11 @@ class Twitter
     }
 
     /**
-     * Calls API through the browser client
+     * Calls API through the browser client.
      *
      * @param $method
      * @param $baseUrl
-     * @param array $headers
+     * @param array  $headers
      * @param string $content
      *
      * @return \Buzz\Message\Response

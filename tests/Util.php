@@ -1,6 +1,6 @@
 <?php
 
-namespace Endroid\twitter\tests;
+namespace Endroid\Twitter\Tests;
 
 class Util
 {

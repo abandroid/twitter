@@ -1,6 +1,6 @@
 <?php
 
-namespace Endroid\twitter\tests;
+namespace Endroid\Twitter\Tests;
 
 use Buzz\Message\Response;
 use Endroid\Twitter\Twitter;

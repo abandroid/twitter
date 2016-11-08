@@ -60,25 +60,33 @@ class Twitter
     /**
      * Class constructor.
      *
-     * @param string      $consumerKey
-     * @param string      $consumerSecret
+     * @param string $consumerKey
+     * @param string $consumerSecret
      * @param string|null $accessToken
      * @param string|null $accessTokenSecret
      * @param string|null $apiUrl
+     * @param string|null $proxy
+     * @param int|null $timeout
      */
     public function __construct(
         $consumerKey,
         $consumerSecret,
         $accessToken = null,
         $accessTokenSecret = null,
-        $apiUrl = null
+        $apiUrl = null,
+        $proxy = null,
+        $timeout = null
     ) {
         $this->consumerKey = $consumerKey;
         $this->consumerSecret = $consumerSecret;
         $this->accessToken = $accessToken;
         $this->accessTokenSecret = $accessTokenSecret;
         $this->apiUrl = $apiUrl ?: self::BASE_URL.'/1.1/';
-        $this->browser = new Browser(new Curl());
+
+        $curl = new Curl();
+        $curl->setTimeout($timeout);
+        $curl->setProxy($proxy);
+        $this->browser = new Browser($curl);
     }
 
     /**

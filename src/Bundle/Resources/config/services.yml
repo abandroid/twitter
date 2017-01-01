@@ -1,0 +1,4 @@
+services:
+    endroid.twitter:
+        class: Endroid\Twitter\Twitter
+        arguments: [ '%endroid.twitter.consumer_key%', '%endroid.twitter.consumer_secret%', '%endroid.twitter.access_token%', '%endroid.twitter.access_token_secret%', '%endroid.twitter.api_url%', '%endroid.twitter.proxy%', '%endroid.twitter.timeout%' ]

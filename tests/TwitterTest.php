@@ -1,11 +1,17 @@
 <?php
 
-namespace Endroid\Twitter\Tests;
+/*
+ * (c) Jeroen van den Enden <info@endroid.nl>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
 
-use Buzz\Message\Response;
 use Endroid\Twitter\Twitter;
+use Endroid\Twitter\Tests\Util;
+use Symfony\Component\HttpFoundation\Response;
 
-class TwitterTest extends \PHPUnit_Framework_TestCase
+class TwitterTest extends PHPUnit_Framework_TestCase
 {
     const EXPECTED_OAUTH_HEADER_PARAMETERS = 'oauth_consumer_key=foo, oauth_nonce=1234567890, oauth_signature_method=HMAC-SHA1, oauth_timestamp=1234567890, oauth_token=baz, oauth_version=1.0';
     const EXPECTED_OAUTH_HEADER = 'OAuth %s, oauth_signature=';

@@ -99,14 +99,14 @@ class Twitter
      *
      * @return \Buzz\Message\Response
      */
-    public function query($name, $method = 'GET', $format = 'json', $parameters = array())
+    public function query($name, $method = 'GET', $format = 'json', $parameters = [])
     {
         $baseUrl = $this->apiUrl.$name.'.'.$format;
 
-        $headers = array(
+        $headers = [
             'Content-Type: application/x-www-form-urlencoded',
             'Authorization: '.$this->getAuthorization($baseUrl, $method, $parameters),
-        );
+        ];
 
         $queryParameters = $this->getQueryParameters($parameters);
         if ($queryParameters) {
@@ -139,7 +139,7 @@ class Twitter
      *
      * @return string
      */
-    protected function getAuthorization($baseUrl, $method = 'GET', $parameters = array())
+    protected function getAuthorization($baseUrl, $method = 'GET', $parameters = [])
     {
         if (!empty($this->accessToken) && !empty($this->accessTokenSecret)) {
             return $this->getOAuthHeader($baseUrl, $method, $parameters);
@@ -159,27 +159,27 @@ class Twitter
      *
      * @throws InvalidParametersException
      */
-    protected function getOAuthHeader($baseUrl, $method = 'GET', $parameters = array())
+    protected function getOAuthHeader($baseUrl, $method = 'GET', $parameters = [])
     {
         if (empty($this->accessToken) ||
             empty($this->accessTokenSecret) ||
             empty($this->consumerKey) ||
             empty($this->consumerSecret)
         ) {
-            $mandatoryParameters = array('accessToken', 'accessTokenSecret', 'consumerKey', 'consumerSecret');
+            $mandatoryParameters = ['accessToken', 'accessTokenSecret', 'consumerKey', 'consumerSecret'];
             throw new InvalidParametersException(
                 sprintf('Twitter needs these mandatory parameters: %s', implode(', ', $mandatoryParameters))
             );
         }
 
-        $oAuthParameters = array(
+        $oAuthParameters = [
             'oauth_consumer_key' => $this->consumerKey,
             'oauth_nonce' => time(),
             'oauth_signature_method' => 'HMAC-SHA1',
             'oauth_timestamp' => time(),
             'oauth_token' => $this->accessToken,
             'oauth_version' => '1.0',
-        );
+        ];
 
         // Build parameters string
         $oAuthParameters = array_merge($parameters, $oAuthParameters);
@@ -208,10 +208,10 @@ class Twitter
      */
     public function getBearerHeader()
     {
-        $headers = array(
+        $headers = [
             'Authorization: '.$this->getBasicHeader(),
             'Content-Type: application/x-www-form-urlencoded',
-        );
+        ];
 
         $response = $this->call('POST', self::BASE_URL.self::TOKEN_URL, $headers, 'grant_type=client_credentials');
         $content = $response->getContent();
@@ -239,7 +239,7 @@ class Twitter
     protected function getBasicHeader()
     {
         if (empty($this->consumerKey) || empty($this->consumerSecret)) {
-            $mandatoryParameters = array('consumerKey', 'consumerSecret');
+            $mandatoryParameters = ['consumerKey', 'consumerSecret'];
             throw new InvalidParametersException(
                 sprintf('Twitter needs these mandatory parameters: %s', implode(', ', $mandatoryParameters))
             );
@@ -255,11 +255,11 @@ class Twitter
      *
      * @return string
      */
-    protected function getQueryParameters($parameters = array())
+    protected function getQueryParameters($parameters = [])
     {
         $query = '';
         if (count($parameters) > 0) {
-            $queryParts = array();
+            $queryParts = [];
             foreach ($parameters as $key => $value) {
                 $queryParts[] = $key.'='.rawurlencode($value);
             }
@@ -279,7 +279,7 @@ class Twitter
      *
      * @return \Buzz\Message\Response
      */
-    protected function call($method, $baseUrl, $headers = array(), $content = '')
+    protected function call($method, $baseUrl, $headers = [], $content = '')
     {
         if (strtoupper($method) == 'GET') {
             return $this->browser->get($baseUrl, $headers);

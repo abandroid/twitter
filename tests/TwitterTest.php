@@ -21,8 +21,8 @@ class TwitterTest extends PHPUnit_Framework_TestCase
     public function testGetQueryParameters()
     {
         $twitter = new Twitter('foo', 'bar');
-        $parameters = array('a' => 'foo', 'b' => 'bar', 'c' => 'baz');
-        $header = Util::invokeMethod($twitter, 'getQueryParameters', array($parameters));
+        $parameters = ['a' => 'foo', 'b' => 'bar', 'c' => 'baz'];
+        $header = Util::invokeMethod($twitter, 'getQueryParameters', [$parameters]);
         $this->assertEquals('a=foo&b=bar&c=baz', $header);
     }
 
@@ -43,8 +43,8 @@ class TwitterTest extends PHPUnit_Framework_TestCase
     public function testGetBearerHeader()
     {
         $twitter = $this->getMockBuilder('Endroid\Twitter\Twitter')
-            ->setConstructorArgs(array('foo', 'bar'))
-            ->setMethods(array('getBasicHeader', 'call'))
+            ->setConstructorArgs(['foo', 'bar'])
+            ->setMethods(['getBasicHeader', 'call'])
             ->getMock();
 
         $twitter->expects($this->any())
@@ -52,10 +52,10 @@ class TwitterTest extends PHPUnit_Framework_TestCase
             ->willReturn(self::EXPECTED_BASIC_HEADER);
 
         $response = new Response();
-        $response->setContent(json_encode(array(
+        $response->setContent(json_encode([
             'token_type' => 'bearer',
             'access_token' => 'cc4f26cc4a3f61a84436014b2166e431',
-        )));
+        ]));
 
         $twitter->expects($this->any())
             ->method('call')
@@ -69,8 +69,8 @@ class TwitterTest extends PHPUnit_Framework_TestCase
     public function testGetBearerHeaderInvalidResponseException()
     {
         $twitter = $this->getMockBuilder('Endroid\Twitter\Twitter')
-            ->setConstructorArgs(array('foo', 'bar'))
-            ->setMethods(array('getBasicHeader', 'call'))
+            ->setConstructorArgs(['foo', 'bar'])
+            ->setMethods(['getBasicHeader', 'call'])
             ->getMock();
 
         $twitter->expects($this->any())
@@ -89,8 +89,8 @@ class TwitterTest extends PHPUnit_Framework_TestCase
     public function testGetBearerHeaderInvalidTokenTypeException()
     {
         $twitter = $this->getMockBuilder('Endroid\Twitter\Twitter')
-            ->setConstructorArgs(array('foo', 'bar'))
-            ->setMethods(array('getBasicHeader', 'call'))
+            ->setConstructorArgs(['foo', 'bar'])
+            ->setMethods(['getBasicHeader', 'call'])
             ->getMock();
 
         $twitter->expects($this->any())
@@ -98,10 +98,10 @@ class TwitterTest extends PHPUnit_Framework_TestCase
             ->willReturn(self::EXPECTED_BASIC_HEADER);
 
         $response = new Response();
-        $response->setContent(json_encode(array(
+        $response->setContent(json_encode([
             'token_type' => 'something_wrong',
             'access_token' => 'cc4f26cc4a3f61a84436014b2166e431',
-        )));
+        ]));
 
         $twitter->expects($this->any())
             ->method('call')
@@ -115,15 +115,15 @@ class TwitterTest extends PHPUnit_Framework_TestCase
     public function testGetOAuthHeader()
     {
         $twitter = $this->getMockBuilder('Endroid\Twitter\Twitter')
-            ->setConstructorArgs(array('foo', 'bar', 'baz', 'test'))
-            ->setMethods(array('getQueryParameters'))
+            ->setConstructorArgs(['foo', 'bar', 'baz', 'test'])
+            ->setMethods(['getQueryParameters'])
             ->getMock();
 
         $twitter->expects($this->any())
             ->method('getQueryParameters')
             ->willReturn(self::EXPECTED_OAUTH_HEADER_PARAMETERS);
 
-        $header = Util::invokeMethod($twitter, 'getOAuthHeader', array('https://domain.tld/'));
+        $header = Util::invokeMethod($twitter, 'getOAuthHeader', ['https://domain.tld/']);
         $this->assertContains(sprintf(self::EXPECTED_OAUTH_HEADER, self::EXPECTED_OAUTH_HEADER_PARAMETERS), $header);
     }
 
@@ -131,14 +131,14 @@ class TwitterTest extends PHPUnit_Framework_TestCase
     {
         $twitter = new Twitter('foo', 'bar');
         $this->setExpectedException('Endroid\Twitter\Exception\InvalidParametersException');
-        Util::invokeMethod($twitter, 'getOAuthHeader', array('https://domain.tld/'));
+        Util::invokeMethod($twitter, 'getOAuthHeader', ['https://domain.tld/']);
     }
 
     public function testGetAuthorizationBearer()
     {
         $twitter = $this->getMockBuilder('Endroid\Twitter\Twitter')
-            ->setConstructorArgs(array('foo', 'bar'))
-            ->setMethods(array('getOAuthHeader', 'getBearerHeader'))
+            ->setConstructorArgs(['foo', 'bar'])
+            ->setMethods(['getOAuthHeader', 'getBearerHeader'])
             ->getMock();
 
         $twitter->expects($this->any())
@@ -149,15 +149,15 @@ class TwitterTest extends PHPUnit_Framework_TestCase
             ->method('getOAuthHeader')
             ->willReturn(sprintf(self::EXPECTED_OAUTH_HEADER, self::EXPECTED_OAUTH_HEADER_PARAMETERS));
 
-        $authorization = Util::invokeMethod($twitter, 'getAuthorization', array('https://domain.tld/'));
+        $authorization = Util::invokeMethod($twitter, 'getAuthorization', ['https://domain.tld/']);
         $this->assertEquals(self::EXPECTED_BEARER_HEADER, $authorization);
     }
 
     public function testGetAuthorizationOAuth()
     {
         $twitter = $this->getMockBuilder('Endroid\Twitter\Twitter')
-            ->setConstructorArgs(array('foo', 'bar', 'baz', 'test'))
-            ->setMethods(array('getOAuthHeader', 'getBearerHeader'))
+            ->setConstructorArgs(['foo', 'bar', 'baz', 'test'])
+            ->setMethods(['getOAuthHeader', 'getBearerHeader'])
             ->getMock();
 
         $twitter->expects($this->any())
@@ -168,7 +168,7 @@ class TwitterTest extends PHPUnit_Framework_TestCase
             ->method('getOAuthHeader')
             ->willReturn(sprintf(self::EXPECTED_OAUTH_HEADER, self::EXPECTED_OAUTH_HEADER_PARAMETERS));
 
-        $authorization = Util::invokeMethod($twitter, 'getAuthorization', array('https://domain.tld/'));
+        $authorization = Util::invokeMethod($twitter, 'getAuthorization', ['https://domain.tld/']);
         $this->assertEquals(sprintf(self::EXPECTED_OAUTH_HEADER, self::EXPECTED_OAUTH_HEADER_PARAMETERS), $authorization);
     }
 }

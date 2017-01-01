@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.4",
-        "kriswallsmith/buzz": "~0.10"
+        "kriswallsmith/buzz": "^0.10"
     },
     "require-dev": {
         "symfony/http-foundation": "^2.3|^3.0",
@@ -22,7 +22,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Endroid\\Twitter\\": "src/",
+            "Endroid\\Twitter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Endroid\\Twitter\\Tests\\": "tests/"
         }
     },

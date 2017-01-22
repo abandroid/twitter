@@ -17,15 +17,15 @@ use Endroid\Twitter\Exception\InvalidTokenTypeException;
 
 class Twitter
 {
-    /*
+    /**
      * @var string
      */
-    const BASE_URL = 'https://api.twitter.com';
+    const BASE_URL = 'https://api.twitter.com/1.1';
 
     /**
      * @var string
      */
-    const TOKEN_URL = '/oauth2/token/';
+    const TOKEN_URL = '/oauth2/token';
 
     /**
      * @var string
@@ -81,7 +81,7 @@ class Twitter
         $this->consumerSecret = $consumerSecret;
         $this->accessToken = $accessToken;
         $this->accessTokenSecret = $accessTokenSecret;
-        $this->apiUrl = $apiUrl ?: self::BASE_URL.'/1.1/';
+        $this->apiUrl = $apiUrl ?: self::BASE_URL;
 
         $curl = new Curl();
         $curl->setTimeout($timeout);
@@ -125,7 +125,7 @@ class Twitter
      */
     public function getTimeline($parameters)
     {
-        $response = $this->query('statuses/user_timeline', 'GET', 'json', $parameters);
+        $response = $this->query('/statuses/user_timeline', 'GET', 'json', $parameters);
 
         return json_decode($response->getContent());
     }

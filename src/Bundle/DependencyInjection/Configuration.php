@@ -31,7 +31,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('api_url')->defaultValue(null)->end()
                     ->scalarNode('proxy')->defaultValue(null)->end()
                     ->integerNode('timeout')->defaultValue(5)->end()
-                    ->integerNode('verify_peer')->defaultValue(true)->end()
+                    ->booleanNode('verify_peer')->defaultValue(true)->end()
                 ->end()
         ;
 

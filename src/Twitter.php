@@ -87,7 +87,7 @@ class Twitter
         $curl = new Curl();
         $curl->setTimeout($timeout);
         $curl->setProxy($proxy);
-        $curl->setVerifyPeers(true);
+        $curl->setVerifyPeers($verifyPeers);
         $this->browser = new Browser($curl);
     }
 

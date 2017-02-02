@@ -75,7 +75,8 @@ class Twitter
         $accessTokenSecret = null,
         $apiUrl = null,
         $proxy = null,
-        $timeout = null
+        $timeout = null,
+        $verifyPeers = true
     ) {
         $this->consumerKey = $consumerKey;
         $this->consumerSecret = $consumerSecret;
@@ -86,6 +87,7 @@ class Twitter
         $curl = new Curl();
         $curl->setTimeout($timeout);
         $curl->setProxy($proxy);
+        $curl->setVerifyPeers(true);
         $this->browser = new Browser($curl);
     }
 

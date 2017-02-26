@@ -67,6 +67,7 @@ class Twitter
      * @param string|null $apiUrl
      * @param string|null $proxy
      * @param int|null $timeout
+     * @param bool|null $verifyPeer
      */
     public function __construct(
         $consumerKey,
@@ -75,7 +76,8 @@ class Twitter
         $accessTokenSecret = null,
         $apiUrl = null,
         $proxy = null,
-        $timeout = null
+        $timeout = null,
+        $verifyPeer = true
     ) {
         $this->consumerKey = $consumerKey;
         $this->consumerSecret = $consumerSecret;
@@ -86,6 +88,7 @@ class Twitter
         $curl = new Curl();
         $curl->setTimeout($timeout);
         $curl->setProxy($proxy);
+        $curl->setVerifyPeer($verifyPeer);
         $this->browser = new Browser($curl);
     }
 

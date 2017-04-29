@@ -11,6 +11,8 @@ namespace Endroid\Twitter;
 
 use Buzz\Browser;
 use Buzz\Client\Curl;
+use Buzz\Message\Form\FormRequest;
+use Buzz\Message\Form\FormUpload;
 use Endroid\Twitter\Exception\InvalidParametersException;
 use Endroid\Twitter\Exception\InvalidResponseException;
 use Endroid\Twitter\Exception\InvalidTokenTypeException;
@@ -129,6 +131,35 @@ class Twitter
     public function getTimeline($parameters)
     {
         $response = $this->query('/statuses/user_timeline', 'GET', 'json', $parameters);
+
+        return json_decode($response->getContent());
+    }
+
+    /**
+     * @param string $filePath
+     * @return mixed
+     */
+    public function uploadMedia($filePath)
+    {
+        if (!file_exists($filePath)) {
+            throw new \InvalidArgumentException('No or invalid file set!');
+        }
+
+        $baseUrl = 'https://upload.twitter.com/1.1/media/upload.json';
+
+        $headers = [
+            'Content-Type: multipart/form-data',
+            'Authorization: ' . $this->getAuthorization($baseUrl, 'POST'),
+        ];
+
+        $request = new FormRequest();
+        $request->setField('media', new FormUpload($filePath));
+        $request->setHeaders($headers);
+        $request->setMethod('POST');
+        $request->setHost('https://upload.twitter.com');
+        $request->setResource('/1.1/media/upload.json');
+
+        $response = $this->browser->send($request);
 
         return json_decode($response->getContent());
     }

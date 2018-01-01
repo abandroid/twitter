@@ -1,10 +1,9 @@
-Twitter
-=======
+# Twitter
 
 *By [endroid](http://endroid.nl/)*
 
 [![Latest Stable Version](http://img.shields.io/packagist/v/endroid/twitter.svg)](https://packagist.org/packages/endroid/twitter)
-[![Build Status](https://secure.travis-ci.org/endroid/Twitter.png)](http://travis-ci.org/endroid/Twitter)
+[![Build Status](https://secure.travis-ci.org/endroid/twitter.png)](http://travis-ci.org/endroid/twitter)
 [![Total Downloads](http://img.shields.io/packagist/dt/endroid/twitter.svg)](https://packagist.org/packages/endroid/twitter)
 [![Monthly Downloads](http://img.shields.io/packagist/dm/endroid/twitter.svg)](https://packagist.org/packages/endroid/twitter)
 [![License](http://img.shields.io/packagist/l/endroid/twitter.svg)](https://packagist.org/packages/endroid/twitter)

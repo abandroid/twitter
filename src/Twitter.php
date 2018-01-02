@@ -62,14 +62,14 @@ class Twitter
     /**
      * Class constructor.
      *
-     * @param string $consumerKey
-     * @param string $consumerSecret
+     * @param string      $consumerKey
+     * @param string      $consumerSecret
      * @param string|null $accessToken
      * @param string|null $accessTokenSecret
      * @param string|null $apiUrl
      * @param string|null $proxy
-     * @param int|null $timeout
-     * @param bool|null $verifyPeer
+     * @param int|null    $timeout
+     * @param bool|null   $verifyPeer
      */
     public function __construct(
         $consumerKey,
@@ -137,6 +137,7 @@ class Twitter
 
     /**
      * @param string $filePath
+     *
      * @return mixed
      */
     public function uploadMedia($filePath)
@@ -149,7 +150,7 @@ class Twitter
 
         $headers = [
             'Content-Type: multipart/form-data',
-            'Authorization: ' . $this->getAuthorization($baseUrl, 'POST'),
+            'Authorization: '.$this->getAuthorization($baseUrl, 'POST'),
         ];
 
         $request = new FormRequest();
@@ -256,7 +257,7 @@ class Twitter
                 sprintf('Twitter response is invalid: %s', $content)
             );
         }
-        if ($result['token_type'] !== 'bearer') {
+        if ('bearer' !== $result['token_type']) {
             throw new InvalidTokenTypeException(sprintf('Twitter token type is invalid: %s.', $result['token_type']));
         }
 
@@ -315,7 +316,7 @@ class Twitter
      */
     protected function call($method, $baseUrl, $headers = [], $content = '')
     {
-        if (strtoupper($method) == 'GET') {
+        if ('GET' == strtoupper($method)) {
             return $this->browser->get($baseUrl, $headers);
         } else {
             return $this->browser->post($baseUrl, $headers, $content);

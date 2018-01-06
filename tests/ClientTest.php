@@ -7,11 +7,12 @@
  * with this source code in the file LICENSE.
  */
 
-use Endroid\Twitter\Twitter;
+use Endroid\Twitter\Client;
 use Endroid\Twitter\Tests\Util;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class TwitterTest extends PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     const EXPECTED_OAUTH_HEADER_PARAMETERS = 'oauth_consumer_key=foo, oauth_nonce=1234567890, oauth_signature_method=HMAC-SHA1, oauth_timestamp=1234567890, oauth_token=baz, oauth_version=1.0';
     const EXPECTED_OAUTH_HEADER = 'OAuth %s, oauth_signature=';
@@ -20,7 +21,7 @@ class TwitterTest extends PHPUnit_Framework_TestCase
 
     public function testGetQueryParameters()
     {
-        $twitter = new Twitter('foo', 'bar');
+        $twitter = new Client('foo', 'bar');
         $parameters = ['a' => 'foo', 'b' => 'bar', 'c' => 'baz'];
         $header = Util::invokeMethod($twitter, 'getQueryParameters', [$parameters]);
         $this->assertEquals('a=foo&b=bar&c=baz', $header);
@@ -28,14 +29,14 @@ class TwitterTest extends PHPUnit_Framework_TestCase
 
     public function testGetBasicHeader()
     {
-        $twitter = new Twitter('foo', 'bar');
+        $twitter = new Client('foo', 'bar');
         $header = Util::invokeMethod($twitter, 'getBasicHeader');
         $this->assertEquals(self::EXPECTED_BASIC_HEADER, $header);
     }
 
     public function testGetBasicHeaderInvalidParametersException()
     {
-        $twitter = new Twitter(null, null);
+        $twitter = new Client(null, null);
         $this->setExpectedException('Endroid\Twitter\Exception\InvalidParametersException');
         Util::invokeMethod($twitter, 'getBasicHeader');
     }
@@ -59,7 +60,7 @@ class TwitterTest extends PHPUnit_Framework_TestCase
 
         $twitter->expects($this->any())
             ->method('call')
-            ->with('POST', Twitter::BASE_URL.Twitter::TOKEN_URL)
+            ->with('POST', Client::BASE_URL.Client::TOKEN_URL)
             ->willReturn($response);
 
         $header = Util::invokeMethod($twitter, 'getBearerHeader');
@@ -79,7 +80,7 @@ class TwitterTest extends PHPUnit_Framework_TestCase
 
         $twitter->expects($this->any())
             ->method('call')
-            ->with('POST', Twitter::BASE_URL.Twitter::TOKEN_URL)
+            ->with('POST', Client::BASE_URL.Client::TOKEN_URL)
             ->willReturn(new Response());
 
         $this->setExpectedException('Endroid\Twitter\Exception\InvalidResponseException');
@@ -105,7 +106,7 @@ class TwitterTest extends PHPUnit_Framework_TestCase
 
         $twitter->expects($this->any())
             ->method('call')
-            ->with('POST', Twitter::BASE_URL.Twitter::TOKEN_URL)
+            ->with('POST', Client::BASE_URL.Client::TOKEN_URL)
             ->willReturn($response);
 
         $this->setExpectedException('Endroid\Twitter\Exception\InvalidTokenTypeException');
@@ -129,7 +130,7 @@ class TwitterTest extends PHPUnit_Framework_TestCase
 
     public function testGetOAuthHeaderInvalidParametersException()
     {
-        $twitter = new Twitter('foo', 'bar');
+        $twitter = new Client('foo', 'bar');
         $this->setExpectedException('Endroid\Twitter\Exception\InvalidParametersException');
         Util::invokeMethod($twitter, 'getOAuthHeader', ['https://domain.tld/']);
     }

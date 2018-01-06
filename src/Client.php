@@ -17,7 +17,7 @@ use Endroid\Twitter\Exception\InvalidParametersException;
 use Endroid\Twitter\Exception\InvalidResponseException;
 use Endroid\Twitter\Exception\InvalidTokenTypeException;
 
-class Twitter
+class Client
 {
     /**
      * @var string

@@ -8,8 +8,7 @@
 [![Monthly Downloads](http://img.shields.io/packagist/dm/endroid/twitter.svg)](https://packagist.org/packages/endroid/twitter)
 [![License](http://img.shields.io/packagist/l/endroid/twitter.svg)](https://packagist.org/packages/endroid/twitter)
 
-This library helps making requests to the Twitter API and provides a Symfony Bundle
-which allows configuration and service retrieval via the service container. The only
+This library helps making requests to the Twitter API. The only
 things you need are the keys which you can find in the [developer console](https://dev.twitter.com/).
 
 ## Installation
@@ -27,10 +26,10 @@ Register your application at http://apps.twitter.com/app
 ## Usage
 
 ```php
-use Endroid\Twitter\Twitter;
+use Endroid\Twitter\Client;
 
 // If you want to fetch the Twitter API with "application only" authentication, $accessToken and $accessTokenSecret are optional
-$twitter = new Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+$twitter = new Client($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
 
 // Retrieve the user's timeline
 $tweets = $twitter->getTimeline([
@@ -44,35 +43,7 @@ $tweets = json_decode($response->getContent());
 
 ## Symfony integration
 
-Register the Symfony bundle in the kernel.
 
-```php
-// app/AppKernel.php
-
-public function registerBundles()
-{
-    $bundles = [
-        // ...
-        new Endroid\Twitter\Bundle\EndroidTwitterBundle(),
-    ];
-}
-```
-
-The default parameters can be overridden via the configuration.
-
-```yaml
-endroid_twitter:
-    consumer_key: '...'
-    consumer_secret: '...'
-    access_token: '...'
-    access_token_secret: '...'
-```
-
-Now you can retrieve the client as follows.
-
-```php
-$twitter = $this->get('endroid.twitter');
-```
 
 ## Versioning
 

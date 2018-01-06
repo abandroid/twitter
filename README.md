@@ -29,21 +29,14 @@ Register your application at http://apps.twitter.com/app
 use Endroid\Twitter\Client;
 
 // If you want to fetch the Twitter API with "application only" authentication, $accessToken and $accessTokenSecret are optional
-$twitter = new Client($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+$client = new Client($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
 
-// Retrieve the user's timeline
-$tweets = $twitter->getTimeline([
-    'count' => 5
-]);
+// Retrieve the last 50 items in the user's timeline
+$tweets = $client->getTimeline(50);
 
-// Or retrieve the timeline using the generic query method
-$response = $twitter->query('/statuses/user_timeline', 'GET', 'json', $parameters);
-$tweets = json_decode($response->getContent());
+// Or post a status message (with optional media)
+$client->postStatus('Hello, this is my new status', ['/tmp/image1.png', '/tmp/image2.png']);
 ```
-
-## Symfony integration
-
-
 
 ## Versioning
 

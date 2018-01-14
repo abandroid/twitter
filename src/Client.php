@@ -42,7 +42,7 @@ class Client
 
         $parameters = [
             'status' => $message,
-            'media_ids' => implode(',', $media_ids)
+            'media_ids' => implode(',', $media_ids),
         ];
 
         $response = $this->client->post('statuses/update', $parameters);

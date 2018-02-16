@@ -26,10 +26,11 @@ Register your application at http://apps.twitter.com/app
 ## Usage
 
 ```php
+use Abraham\TwitterOAuth\TwitterOAuth;
 use Endroid\Twitter\Client;
 
-// If you want to fetch the Twitter API with "application only" authentication, $accessToken and $accessTokenSecret are optional
-$client = new Client($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+$twitterOAuth = new TwitterOAuth($consumerKey, $consumerSecret);
+$client = new Client($twitterOAuth);
 
 // Retrieve the last 50 items in the user's timeline
 $tweets = $client->getTimeline(50);

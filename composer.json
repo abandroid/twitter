@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=7.1",
-        "abraham/twitteroauth": "^0.7",
+        "abraham/twitteroauth": "^0.9",
         "endroid/installer": "^1.0.3"
     },
     "require-dev": {

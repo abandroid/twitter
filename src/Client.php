@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Endroid\Twitter;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
+use Exception;
 
 class Client
 {
@@ -29,9 +30,11 @@ class Client
 
     public function getTimeline(int $count = 25): array
     {
-        $statuses = $this->client->get('statuses/home_timeline', ['count' => $count]);
+        $response = $this->client->get('statuses/home_timeline', ['count' => $count]);
 
-        return $statuses;
+        $this->assertValidResponse($response);
+
+        return $response;
     }
 
     public function postStatus(string $message, array $mediaPaths = [])
@@ -49,6 +52,15 @@ class Client
 
         $response = $this->client->post('statuses/update', $parameters);
 
+        $this->assertValidResponse($response);
+
         return $response;
+    }
+
+    private function assertValidResponse($response): void
+    {
+        if (is_object($response) && property_exists($response, 'errors')) {
+            throw new Exception('Twitter client error: '.$response->errors[0]->message);
+        }
     }
 }
